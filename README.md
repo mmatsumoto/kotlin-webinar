@@ -87,3 +87,5 @@
 - tailrec - Topic17
 
 - Coroutines - Topic18
+
+- Monad Either - Topic19

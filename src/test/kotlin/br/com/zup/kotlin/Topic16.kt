@@ -38,17 +38,17 @@ class Topic16 {
 
         assertEquals(totalWar, game)
 
-        val gameRest = GameRest()
 
+        // tacit programming, no point-free style
 //        val game = getGameInfo()
-//        val players = getPlayers(game)
-//        val records = updateResults(game, players)
-//        displayResults(records)
+        val players = getPlayers(game)
+        val records = updateResults(game, players)
+        displayResults(records)
 
-//        getGameInfo()
-//                .let { Pair(it, getPlayers(it)) }
-//                .let { (game, players) -> updateResults(game, players) }
-//                .also { displayResults(it) }
+        getGameInfo()
+                .let { Pair(it, getPlayers(it)) }
+                .let { (game, players) -> updateResults(game, players) }
+                .also { displayResults(it) }
 
 
     }
@@ -170,49 +170,3 @@ data class Game(var name: String, var type: GameType? = null, var vendor: String
     }
 }
 
-class GameRest {
-    fun getGame() = Game("any", MMO)
-
-//    fun getGames(page: PageNumber): List<Game>  {
-//        TODO()
-//    }
-
-    fun getGame(id: GameId): Either<Failure, Success<Game>> {
-        TODO()
-    }
-
-    fun getGames(page: PageNumber): Either<Failure, List<Game>> {
-        TODO()
-    }
-
-    fun getPlayers(game: Game): Either<Failure, Success<GamePlayer>> {
-        TODO()
-    }
-
-    fun updateResults(gamePlayer: GamePlayer): Either<Failure, Success<GameResult>> {
-        TODO()
-    }
-
-    fun getPlayers(game: Failure): Either<Failure, Success<GamePlayer>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    fun updateResults(gamePlayer: Failure): Either<Failure, Success<GameResult>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    fun createNewGame(): Either<Failure, Success<Game>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}
-
-data class Success<T>(val result: T)
-
-data class GamePlayer(val game: Game, val players: List<Player>)
-
-typealias GameId = Long
-
-class Failure(message: String) : RuntimeException(message)
-
-typealias PageNumber = Int
