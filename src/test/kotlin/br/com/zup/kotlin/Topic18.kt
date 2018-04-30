@@ -8,11 +8,15 @@ import org.junit.Test
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
+import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 
+
+
 class CoroutinesTest {
+    private val service = CoroutinesService()
 
     @Test
     fun `threads are too heavy weight`() {
@@ -27,49 +31,41 @@ class CoroutinesTest {
                 }
             }
             jobs.forEach { it.join() }
+
         }
 
     }
 
-    private val service = CoroutinesService()
 
     @Test
-    fun `kotlin coroutines are light weight`() {
+    fun `kotlin coroutines are light weight`() = runBlocking {
 
-        runBlocking {
-
-            val jobs = List(1_000_000) {
-                launch {
-                    println("launch $it, waiting 1000L")
-                    delay(300L)
-                    print("$it done")
-                }
+        val jobs = List(1_000_000) {
+            launch {
+                println("launch $it, waiting 200L")
+                delay(200L)
+                println("$it done ")
             }
-            jobs.forEach { it.join() }
         }
-    }
-
-    @Test
-    fun `no callback hell sequencial`() {
-
-        launch {
-
-            val catalogOne = service.asyncFindCatalogId(1)
-
-            val offers = service.asyncFindOffersByCatalogId(catalogOne.toInt())
-
-            assertEquals(listOf("Offer1", "Offer2"), offers)
-
-        }
-
+        jobs.forEach { it.join() }
     }
 
 
     @Test
-    fun `test async call - parallel`() {
+    fun `no callback hell, sequential call`() = runBlocking {
+        val catalog = service.findCatalogId(CatalogId(1))
 
-        val findOne1 = async { service.findCatalogId(1) }
-        val findOne2 = async { service.findCatalogId(2) }
+        val offers = service.findOffers(catalog.id)
+
+        assertEquals(listOf("Offer1", "Offer2"), offers.map { it.name })
+    }
+
+
+    @Test
+    fun `test async call`() {
+
+        val findOne1 = async { service.findCatalogId(CatalogId(1)) }
+        val findOne2 = async { service.findCatalogId(CatalogId(2)) }
 
         runBlocking {
             println("running blocking code")
@@ -77,7 +73,7 @@ class CoroutinesTest {
             val catalog1 = findOne1.await()
             val catalog2 = findOne2.await()
 
-            print("Combined: ($catalog1) ($catalog2)")
+            print("($catalog1) ($catalog2)")
         }
     }
 
@@ -87,7 +83,7 @@ class CoroutinesTest {
 
         val jobs = List(5) {
             launch {
-                service.findCatalogId((1..100).random())
+                service.findCatalogId(CatalogId((1..100).random()))
             }
         }
 
@@ -100,6 +96,7 @@ class CoroutinesTest {
         }
     }
 
+
     @Test
     fun `test await`() {
         runBlocking {
@@ -108,7 +105,6 @@ class CoroutinesTest {
             val j2 = service.testAwait("2")
             val j3 = service.testAwait("3")
             println("jobs lancado")
-
 
             println("esperando")
             j1.await()
@@ -124,36 +120,50 @@ class CoroutinesTest {
 
 class CoroutinesService {
 
+
     fun testAwait(id: String) = async {
-        println(" - iniciando test await $id")
-        delay(5, TimeUnit.SECONDS)
-        println(" - terminando test await $id")
+        measureTimeMillis {
+            println(" - starting test await $id")
+            delay(5, TimeUnit.SECONDS)
+            println(" - test await $id done")
+        }.also { println("Time await $id: $it") }
     }
 
-    suspend fun findCatalogId(id: Int, timeout: Int = (5..10).random()): String {
+
+    suspend fun findCatalogId(id: CatalogId): Catalog {
+
+        val timeout = (5..10).random()
         println("starting findCatalogId($id) timeout: $timeout")
         delay(timeout.toLong(), TimeUnit.SECONDS)
         println("returning from findCatalogId($id)")
-        return id.toString()
+        return Catalog(id, "catalog $id")
     }
+    suspend fun findOffers(id: CatalogId): List<Offer> {
 
-    suspend fun findOffers(id: Int, timeout: Int = (5..10).random()): List<String> {
+
+        val timeout = (5..10).random()
         println("starting findOffers($id) timeout: $timeout")
         delay(timeout.toLong(), TimeUnit.SECONDS)
         println("returning from findOffers($id)")
-        return listOf("Offer1", "Offer2")
+        return listOf(
+                Offer(id, OfferId(1), "Offer1"),
+                Offer(id, OfferId(2), "Offer2"))
     }
 
-    suspend fun asyncFindCatalogId(id: Int, timeout: Int = (5..10).random()): String = async {
-        findCatalogId(id, timeout)
-    }.await()
 
-    suspend fun asyncFindOffersByCatalogId(id: Int, timeout: Int = (5..10).random()): List<String> = async {
-        findOffers(id, timeout)
-    }.await()
 
 }
 
 
 fun ClosedRange<Int>.random() =
         Random().nextInt(endInclusive - start) + start
+
+
+
+typealias CatalogId = Integer
+typealias OfferId = Integer
+typealias CatalogName = String
+typealias OfferName = String
+
+data class Catalog(val id: CatalogId, val name: CatalogName)
+data class Offer(val catalogId: CatalogId, val id:OfferId, val name: OfferName)
