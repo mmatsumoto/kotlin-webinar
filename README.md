@@ -89,3 +89,5 @@
 - Coroutines - Topic18
 
 - Monad Either - Topic19
+
+- Currying - Topic20

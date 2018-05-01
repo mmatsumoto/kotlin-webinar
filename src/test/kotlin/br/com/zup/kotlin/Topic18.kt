@@ -1,5 +1,6 @@
 package br.com.zup.kotlin
 
+import br.com.zup.zkotlin.coroutine.await
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
@@ -11,8 +12,6 @@ import kotlin.concurrent.thread
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-
-
 
 
 class CoroutinesTest {
@@ -112,9 +111,24 @@ class CoroutinesTest {
             j3.await()
             println("terminei de esperar")
         }
-
-
     }
+
+
+    @Test
+    fun testAwaitWithChunked() {
+            (1..10).chunked(2) { chunkedNumbers ->
+                runBlocking {
+                    chunkedNumbers.map {
+                        service.testAwait(it.toString())
+                    }.await()
+                }
+        }.flatMap { it }
+                .also { println("terminei tudo") }
+                .forEach { println("terminado: $it") }
+    }
+
+
+
 }
 
 
@@ -124,9 +138,10 @@ class CoroutinesService {
     fun testAwait(id: String) = async {
         measureTimeMillis {
             println(" - starting test await $id")
-            delay(5, TimeUnit.SECONDS)
+            delay(1, TimeUnit.SECONDS)
             println(" - test await $id done")
         }.also { println("Time await $id: $it") }
+        id
     }
 
 
@@ -138,6 +153,7 @@ class CoroutinesService {
         println("returning from findCatalogId($id)")
         return Catalog(id, "catalog $id")
     }
+
     suspend fun findOffers(id: CatalogId): List<Offer> {
 
 
@@ -149,7 +165,6 @@ class CoroutinesService {
                 Offer(id, OfferId(1), "Offer1"),
                 Offer(id, OfferId(2), "Offer2"))
     }
-
 
 
 }
@@ -166,4 +181,4 @@ typealias CatalogName = String
 typealias OfferName = String
 
 data class Catalog(val id: CatalogId, val name: CatalogName)
-data class Offer(val catalogId: CatalogId, val id:OfferId, val name: OfferName)
+data class Offer(val catalogId: CatalogId, val id: OfferId, val name: OfferName)
