@@ -1,14 +1,12 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import kotlin.test.assertEquals
 
-fun sum(x: Int, y: Int) = x + y
+fun sum(x: Int, y: Int): Int = x + y
 
 fun sub(x: Int, y: Int) = x - y
 
-
-fun sum2(x: Int, y: Int) = x + y
 
 
 class Topic3 {

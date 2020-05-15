@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -53,8 +53,19 @@ class Topic13 {
 
         val numbers = (1..100)
 
-        // no collector, lambda last parameter
-        val l = numbers.filter { it % 2 == 0 }
+        // no stream,  no collector, lambda last parameter
+        val l = numbers.filter {
+
+            it % 2 == 0
+
+
+        }
+
+        /**
+          List<Int> l = l.stream()
+              .filter(e -> e % 2 == 0)
+               .collect(Collectors.toList())
+         */
 
         numbers.filter { it % 2 == 0 }
                 .map { it * 2 }
@@ -148,21 +159,26 @@ class Topic13 {
 
 
         val listOfPair = listOf(
-                1 to "a",
-                1 to "b",
-                2 to "a",
-                3 to "c",
-                3 to "b")
+                "Berlin" to "Mike",
+                "Berlin" to "Kathleen",
+                "NY" to "Julia",
+                "NY" to "Helena")
 
         // list elements
-        val pairGroupedBy = listOfPair.groupBy({ it.first },
-                                               { it.second })
+        val pairGroupedBy = listOfPair.groupBy({ it.first }, { it.second })
 
-        assertEquals(mapOf(
-                1 to listOf("a", "b"),
-                2 to listOf("a"),
-                3 to listOf("c", "b")),
-                     pairGroupedBy)
+
+        /**
+         Map<String, List<String>> pairGroupedBY = listOfPair.stream()
+              .collect(Collectors.groupingBy(
+                   Pair::getFirst, Collectors.mapping(Pair::getSecond, Collectors.toList())
+                ))
+         */
+
+//        assertEquals(mapOf(
+//                "Berlin" to listOf("Mike", "Kathleen"),
+//                "NY" to listOf("Julia", "Helena")),
+//                     pairGroupedBy)
         println("pairGrouped: $pairGroupedBy")
 
     }
@@ -195,10 +211,10 @@ class Topic13 {
         generateSequence(1) {
             println("sequence: double it $it")
             it * 2
-        }.takeWhile { it < 10 }
-//                .forEach {
-//                    println("it $it")
-//                }
+        }.takeWhile { it < 3 }
+                .forEach {
+                    println("it $it")
+                }
 
 
         listOf(1,2,3,4).asSequence()

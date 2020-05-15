@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 
@@ -11,6 +11,10 @@ class Topic4 {
         for (i in numbers) {
             print("i=$i")
         }
+
+
+
+
 
         for (i in 1..100) {
             print("i=$i")
@@ -26,7 +30,7 @@ class Topic4 {
         println ("s1 = ${s1.toUpperCase()}")
 
         val s2: String = """
-                |asdf
+                |asdf 
                 |asdf
                 |asdf
         """.trimMargin()

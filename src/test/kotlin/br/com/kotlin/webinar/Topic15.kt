@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -19,7 +19,9 @@ class Topic15One : ServiceOne() {
     }
 }
 
+// ALGE
 sealed class Service2(a: Int)
+
 
 class Topic15Example1 constructor(a: Int) {
 
@@ -56,15 +58,17 @@ class Topic15Example2 constructor(a: Int) {
 
 data class Connection(val url: String)
 
-class Topic15Example3 constructor(private val a: Int) {
 
+// Lazy
+class Topic15Example3 constructor(private val a: Int) {
     val b: Int by lazy {
         println("b lazy init")
         this.a * 2
     }
-
 }
 
+
+// Delegation
 interface MyRepository {
     fun saveFromMyRepository(): Boolean
 }
@@ -94,7 +98,8 @@ class Topic15Example4 {
     @Test
     fun `should use delegate `() {
         assertTrue {
-            MyService(MyRepositoryImpl()).saveFromMyRepository()
+            MyService(MyRepositoryImpl())
+                    .saveFromMyRepository()
         }
     }
 
@@ -117,10 +122,10 @@ class Topic15Example5 {
 
     @Test
     fun test() {
-        Topic15Example5.doSomething()
-        Topic15Example5.page
+        doSomething()
+        page
         // java
-        Topic15Example5.CustomName.doSomething()
+        doSomething()
     }
 }
 

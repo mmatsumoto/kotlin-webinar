@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import java.math.BigInteger

@@ -1,9 +1,8 @@
 @file:Suppress("UNUSED_VARIABLE", "unused")
 
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
-import br.com.zup.kotlin.GameType.*
-import br.com.zup.zkotlin.either.Either
+import br.com.kotlin.webinar.GameType.*
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -25,28 +24,29 @@ with: configure objects created somewhere else
 @Suppress("RedundantVisibilityModifier", "MemberVisibilityCanBePrivate")
 class Topic16 {
 
-    private val totalWar = Game("Total War Rome II", STRATEGY)
+    private val totalWar = Game("Total War Rome II",
+                                                                         STRATEGY)
 
 
     // also: additional processing on an object in a call chain
     @Test
     fun `also do this with the object`() {
 
-        val game = totalWar
+        val gameT = totalWar
                 .also { println(it.name) }
                 .also { it.startGame() }
 
-        assertEquals(totalWar, game)
+        assertEquals(totalWar, gameT)
 
 
         // tacit programming, no point-free style
-//        val game = getGameInfo()
-        val players = getPlayers(game)
-        val records = updateResults(game, players)
+        val someGame = getGameInfo()
+        val players = getPlayers(someGame)
+        val records = updateResults(someGame, players)
         displayResults(records)
 
         getGameInfo()
-                .let { Pair(it, getPlayers(it)) }
+                .let { game -> Pair(game, getPlayers(game)) }
                 .let { (game, players) -> updateResults(game, players) }
                 .also { displayResults(it) }
 
@@ -87,12 +87,24 @@ class Topic16 {
     @Test
     fun `apply is used for post-construction configuration`() {
 
+        /* java
+
+      Game game = new Game()
+      game.setType(..)
+      game.setVendor(..)
+      game.initSomething()
+
+    */
+
+
         val warThunder = Game("War Thunder")
         val game = warThunder.apply {
             type = FS
             vendor = "Gaijin"
             initSomething()
         }
+
+
 
         assertEquals(warThunder, game)
         assertEquals(FS, game.type)
@@ -102,7 +114,8 @@ class Topic16 {
     @Test
     fun `run with lambdas that do not return values`() {
 
-        val warThunder: Game? = Game("War Thunder", FS)
+        val warThunder: Game? =
+                Game("War Thunder", FS)
 
 
         warThunder?.run {

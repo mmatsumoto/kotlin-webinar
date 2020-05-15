@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import kotlin.test.assertFalse
@@ -7,7 +7,13 @@ import kotlin.test.assertTrue
 
 data class City(val name: String)
 
+
+
 data class User(val name: String, val city: City)
+
+
+
+
 
 class Topic5 {
 
@@ -20,7 +26,20 @@ class Topic5 {
         city1.equals(null)
         city1.name
 
+
+
+
+
+
+
+
+
+
+
+
+
         val cityV2 = city1.copy(name ="name 1.1")
+
 
 
         val city2 = City("name2")

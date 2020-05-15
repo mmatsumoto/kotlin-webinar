@@ -1,36 +1,64 @@
-buildscript {
-    ext.kotlin_version = '1.2.41'
-
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.70'
 }
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'idea'
 
 group 'br.com.zup.kotlin'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-apply plugin: 'kotlin'
-
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
+    jcenter()
+    maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
     maven {
         url 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
 }
 
+def arrow_version = "0.10.4"
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
-    compile 'br.com.zup.kotlin:zkotlin:1.0.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
+    implementation "org.jetbrains.kotlin:kotlin-test"
+
+    compile "io.arrow-kt:arrow-fx:$arrow_version"
+    compile "io.arrow-kt:arrow-optics:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: "$kotlin_version"
+    testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit' //, version: "$kotlin_version"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+
+idea {
+    module {
+        sourceDirs += files(
+                'build/generated/source/kapt/main',
+                'build/generated/source/kapt/debug',
+                'build/generated/source/kapt/release',
+                'build/generated/source/kaptKotlin/main',
+                'build/generated/source/kaptKotlin/debug',
+                'build/generated/source/kaptKotlin/release',
+                'build/tmp/kapt/main/kotlinGenerated')
+        generatedSourceDirs += files(
+                'build/generated/source/kapt/main',
+                'build/generated/source/kapt/debug',
+                'build/generated/source/kapt/release',
+                'build/generated/source/kaptKotlin/main',
+                'build/generated/source/kaptKotlin/debug',
+                'build/generated/source/kaptKotlin/release',
+                'build/tmp/kapt/main/kotlinGenerated')
+    }
 }
 
 compileKotlin {
@@ -40,7 +68,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 kotlin {
-    experimental {
-        coroutines "enable"
-    }
+//    experimental {
+//        coroutines "enable"
+//    }
 }

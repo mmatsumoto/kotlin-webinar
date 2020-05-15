@@ -1,8 +1,9 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 class Topic2 {
 
     fun topic2(): String {
+
 
         val s: String = "str"
 
@@ -10,7 +11,14 @@ class Topic2 {
 
         val s1 = "str2"
 
+
+
+
         val s2: String? = null
+
+
+            s2!!.toUpperCase()
+
 
         s2?.toUpperCase()
 

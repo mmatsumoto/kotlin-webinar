@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import kotlin.system.measureTimeMillis
@@ -13,17 +13,23 @@ class Topic14 {
     fun `I have a cool name`() {
 
         assertTrue {
+
             true
+
         }
 
-        assertFails {  }
+        assertFails {
+
+        }
 
     }
 
     @Test
     fun `this test is expecting a  exception`() {
         assertFailsWith <ArithmeticException> {
+
             2 / 0
+
         }
         assertFailsWith (ArithmeticException::class) {
             2 / 0

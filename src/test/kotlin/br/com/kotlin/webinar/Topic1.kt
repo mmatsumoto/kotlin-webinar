@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 fun main(args: Array<String>) {
     println( "hello world")
@@ -8,6 +8,36 @@ fun main(args: Array<String>) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 fun funSoloOne(a: Int): Unit {
 
 }
@@ -15,6 +45,9 @@ fun funSoloOne(a: Int): Unit {
 fun funSoloTwo(b: Int): Int {
     return 1
 }
+
+
+
 
 
 class Topic1 {

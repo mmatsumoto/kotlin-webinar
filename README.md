@@ -1,8 +1,9 @@
 
 # Kotlin Topics ✔:
 
-- Java, Javascript, Native
-- Many classes or functions per file - Topic1
+- Java, Javascript, Native ✔︎
+
+- Many classes or functions per file - Topic1 
 
 - val / var / vararg - Topic2
     - Type Inference
@@ -15,6 +16,11 @@
 
 - String Template, Multiline, Range - Topic4
 
+- Default values for functions parameters - Topic7
+    - no overload method
+    - call in any order
+    - put values without default value at begin
+
 - Data class - Topic5
     - copy
     - equals == and ===
@@ -22,13 +28,7 @@
 
 - Destructuring Declarations - Topic6
 
-- Default values for functions parameters - Topic7
-    - no overload method
-    - call in any order
-    - put values without default value at begin
-
 - Smart cast - Topic8
-    - reified T
 
 - Returning from a code block - Topic9
     - if else
@@ -36,18 +36,18 @@
     - do / while with val
     - when (1..2, Types, null, is Subclass)
     - Unit, Nothing
-
+    
 - Extension Functions - Topic10
     - 1.doSomething()
     - infix
         - Pair 1 to "str"
 
-- Operator Overload - Topic11
-
 - Lambdas - Topic12
     - it, (_)
     - Lambdas as last parameter (No BiFunction, etc)
     - inline
+    - reified T 
+
 
 -  list()/mutableList()/emptyList(), map(), mutableMap(), set() - Topic13
     - plus +
@@ -70,6 +70,11 @@
     - deprecation message, levels and replacements
     - Erasing Erasure
 
+- Operator Overload - Topic11
+ - invoke DSL
+
+- let, let?., with, also, apply, run - Topic16
+
 - Class - Topic15
     - final classes & methods
         - internal, protected, sealed
@@ -81,8 +86,6 @@
     - Delegation
     - object / Companion
         - @JvmStatic
-
-- let, let?., with, also, apply, run - Topic16
 
 - tailrec - Topic17
 

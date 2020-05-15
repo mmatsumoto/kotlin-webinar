@@ -1,4 +1,4 @@
-package br.com.zup.kotlin
+package br.com.kotlin.webinar
 
 import org.junit.Test
 import java.math.BigDecimal
@@ -6,9 +6,7 @@ import java.math.BigDecimal
 class Topic9 {
 
     fun foobar1(a: Int): Int {
-
         val r =  if (a == 1) {
-            println("${a.toLong()}")
             a * 2
         } else {
             -1
@@ -17,26 +15,48 @@ class Topic9 {
         return r
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     fun foobar2(a: Int): Int {
 
-//        if (a == 1) {
-//            println("${a.toLong()}")
-//            return a * 2
-//        } else {
-//            return -1
-//        }
-
         return  if (a == 1) {
-            println("${a.toLong()}")
             a * 2
         } else {
             -1
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     fun foobar3(a: Int): Int =
             if (a == 1) {
-                println("${a.toLong()}")
                 a * 2
             } else {
                 -1
@@ -45,12 +65,14 @@ class Topic9 {
 
     fun foobar4(a: Int): Int {
         return try {
-            println("${a.toLong()}")
             a * 2
         } catch(e: Exception) {
             -1
         }
     }
+
+
+
 
     @Test
     fun foobar5() {
@@ -106,7 +128,7 @@ class Topic9 {
             println("${a.toLong()}")
             a * 2
         } catch(e: Exception) {
-            e.printStackTrace()
+            e.printStackTrace() // Unit
         }
     }
 
