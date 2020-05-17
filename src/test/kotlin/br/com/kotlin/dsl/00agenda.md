@@ -30,7 +30,7 @@
     - DSL support
     - Onboard 
         - For Scala, Groovy 🍰
-        - Intellij it's going to teach you more than Google
+        - IntelliJ it's going to teach you more than Google
         - Does not force you go into another full paradigm, framework, tools
 
 - Kotlin keynotes:
@@ -53,10 +53,18 @@
  - [Extension Function](./06extfun.kt)
     
 ## DSL Domain-Specific Language
+ - _A code that looks less like code and more like a human writing_
+   - Idiomatic 
+   - Fluent
+   - Easier to the users. _not so much for the creators_
    
- - Motivation
  - Start with builders
- - Dsl / Examples
+   - Examples
+     - [Html Render](./examples/html)
+     - [Ktor](./examples/ktor/ktorexample.md)
+     - [Spring](./examples/spring/springexample.md)
+     - [Gradle](./examples/gradle/gradleexample.md)
+   - Dsl
  - Pre-requisites
  - 
 
