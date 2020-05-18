@@ -10,12 +10,9 @@ fun main() {
     println("abcd".reversedAndUppercase())
 
 
-
-
-
-
-
-
+    // jar/library is not yours
+    // you don't want to pollute the data class
+    // increase your code readability
 
 }
 
@@ -25,13 +22,16 @@ fun main() {
 data class Customer(val id: Int, val firstname: String, val lastname: String)
 
 // representation
-
 data class CustomerRepresentation(val fullname: String) {
-    companion object {
+
+    companion object CustomerRepresentationUtil {
+
         fun toRepresentation(c: Customer): CustomerRepresentation {
             return CustomerRepresentation("${c.lastname}, ${c.firstname}")
         }
+
     }
+
 }
 
 fun conver() {
@@ -40,23 +40,25 @@ fun conver() {
             Customer(1, "foo1", "bar1"),
              Customer(1, "foo2", "bar2"))
 
-
+    // without ext
     val cRepresentations =
             customers.map {
-                CustomerRepresentation.Companion.toRepresentation(it)
+                CustomerRepresentation.CustomerRepresentationUtil.toRepresentation(it)
             }
 
 
-    fun List<Customer>.toRepresentation(): List<CustomerRepresentation> {
+    // with ext
+    fun List<Customer>.toCustomerRepresentation(): List<CustomerRepresentation> {
         TODO()
     }
 
 
-    val r2 = customers.toRepresentation()
+    val r2 = customers.toCustomerRepresentation()
 
 
 
-//    listOf(1,2,3).toRepresentation()
+    // doest not compile
+    // listOf(1,2,3).toCustomerRepresentation()
 
 
 

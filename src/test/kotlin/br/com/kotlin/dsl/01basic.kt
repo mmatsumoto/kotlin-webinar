@@ -15,6 +15,8 @@ fun sum1(x: Int, y: Int): Int {
     return x + y
 }
 
+
+
 // sum2 one line fun
 fun sum2(x: Int, y: Int): Int = x + y
 
@@ -22,8 +24,9 @@ fun sum2(x: Int, y: Int): Int = x + y
 fun sum3(x: Int, y: Int) = x + y
 
 
-// data class (show byte class)
+// data class (show byte code)
 data class Point(val x: Int, val y: Int)
+
 
 fun plot() {
     val p1 = Point(1,2)
@@ -55,6 +58,8 @@ fun returningExpressions() {
     val x3 = when(value) {
         is String -> value.toUpperCase()
         is Int -> value * 2
+        Point(1, 2) -> value
+        true -> " true"
         else -> "boom"
     }
 }

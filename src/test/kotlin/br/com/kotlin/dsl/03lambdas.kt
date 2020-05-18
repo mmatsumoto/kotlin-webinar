@@ -1,6 +1,6 @@
 package br.com.kotlin.dsl
 
-// simple lambda
+// simple lambda /lambda
 
 fun higherorder1(λ: (Int) -> Int) {
     println(λ(3))
@@ -11,13 +11,17 @@ fun higherorder2(lambda: (x: Int, y:Int) -> Int) {
 }
 
 fun main() {
+    // most verbose way to the simple one
     higherorder1( { a -> a * a} )
 
+
     higherorder2({ x, y -> x * y })
+
 
     higherorder2 { x, y: Int ->
         x * y
     }
+
 
     higherorder1 {
         it * it
@@ -32,9 +36,8 @@ fun main() {
                 .collect(Collectors.toList());
 
      */
-    val result =
-            (1..100).filter { it % 2 == 0 }
-                    .map    { it * 2 }
+    val result = (1..100).filter { it % 2 == 0 }
+                                   .map    { it * 2 }
 
 
 }

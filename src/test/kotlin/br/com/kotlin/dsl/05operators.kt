@@ -14,7 +14,8 @@ fun over() {
 
     val t1 = Money( m1.value + m2.value, "EUR"  )
 
-    // plus
+
+    // plus (verbose way)
     val t2 = m1.plus(m2)
 
     val t3 = m1 + m2
@@ -65,15 +66,19 @@ fun over() {
     power.status = "on"
     power.status = "off"
 
-    // invoke
+    // invoke - without sugar
     power.invoke("on")
     power.invoke("off")
 
-    power("on")
-    power("off")
+    // with sugar
+    power ("on")
+    power ("off")
 
+
+    // lambda without sugar
     power({ "on" })
 
+    // lambda
     power {
         // i can do more stuffs here
         "on"
@@ -86,6 +91,4 @@ fun over() {
     power.level(1)
 
     power level 1
-
-
 }
