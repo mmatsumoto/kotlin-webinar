@@ -4,7 +4,9 @@ package br.com.kotlin.dsl
 
     class Overload {
 
-        public void route(String path, String request, Integer code) {
+        public void route(String path,
+                          String request,
+                          Integer code) {
             // dosomething
         }
 
@@ -26,36 +28,63 @@ package br.com.kotlin.dsl
  */
 
 
-fun route1(path: String = "/", request: String? = null, code: Int = 200) {
-    TODO()
-}
-
-
-
-fun route2(path: String = "/",
-          request: String? = null ,
-          code: Int = 200,
-          response: (request: String) -> String = { it }) {
-    TODO()
+fun route1(path: String, request: String? = null, code: Int = 200) {
 }
 
 
 fun main() {
-    route1("/hello")
+    route1(path = "/hello")
     route1("/hello", "<request>")
     route1("/hello", "<request>", 201)
 
     // in any other
-    route1(path = "/hello", request = "<request>", code = 201)
+    route1(request = "<request>", code = 201, path = "/hello")
 
-    // mess with the order
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    fun route2(path: String = "/",
+               request: String? = null ,
+               code: Int = 200,
+               response: (request: String) -> String) {
+        TODO()
+    }
+
+
+
+
+
+
+
+
 
 
     route2(path = "/hello") {
         "<my-response>"
     }
 
-    route2 {
-        "<my-response>"
-    }
+    // coroutines async
+    // beans
+
 }

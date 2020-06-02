@@ -2,26 +2,59 @@ package br.com.kotlin.dsl
 
 
 
-fun String.reversedAndUppercase(): String {
+fun String.reverseToUp(): String {
     return this.reversed().toUpperCase()
 }
 
 fun main() {
-    println("abcd".reversedAndUppercase())
+
+
+
+
+
 
 
     // jar/library is not yours
     // you don't want to pollute the data class
     // increase your code readability
 
+
+
+
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // increase your code readability
-//model
+// model
 data class Customer(val id: Int, val firstname: String, val lastname: String)
 
-// representation
+
+
+
+
+
+
+
+// ddd - representation
 data class CustomerRepresentation(val fullname: String) {
 
     companion object CustomerRepresentationUtil {
@@ -40,26 +73,58 @@ fun conver() {
             Customer(1, "foo1", "bar1"),
              Customer(1, "foo2", "bar2"))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // without ext
     val cRepresentations =
             customers.map {
-                CustomerRepresentation.CustomerRepresentationUtil.toRepresentation(it)
+                CustomerRepresentation.toRepresentation(it)
             }
 
 
+
+
+
+
+
+
+
+
+
+
+
     // with ext
-    fun List<Customer>.toCustomerRepresentation(): List<CustomerRepresentation> {
+    fun List<Customer>.toRepresentation(): List<CustomerRepresentation> {
         TODO()
     }
 
 
-    val r2 = customers.toCustomerRepresentation()
+
+
+    val r2 = customers.toRepresentation()
 
 
 
     // doest not compile
-    // listOf(1,2,3).toCustomerRepresentation()
-
-
+//     listOf(1,2,3).toCustomerRepresentation()
 
 }

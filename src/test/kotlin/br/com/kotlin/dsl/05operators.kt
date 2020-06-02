@@ -1,9 +1,8 @@
 
 
 data class Money(val value: Double, val currency: String) {
-
-    operator fun plus(other: Money): Money {
-        return Money( this.value + other.value, this.currency  )
+    operator fun plus(m2: Money): Money {
+        TODO()
     }
 }
 
@@ -16,9 +15,40 @@ fun over() {
 
 
     // plus (verbose way)
-    val t2 = m1.plus(m2)
 
-    val t3 = m1 + m2
+    val t2 = m1 + m2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /*
@@ -45,50 +75,55 @@ fun over() {
 
 
 
-    class Power(var status: String) {
 
-        infix fun level(intensity: Int) {
+
+
+
+
+
+
+
+
+    class Power(var status: String = "off") {
+
+        infix fun level(value:Int) {
 
         }
 
         operator fun invoke(s: String) {
-            this.status = s
+            TODO("Not yet implemented")
         }
 
-        operator fun invoke(lambda: () -> String) {
-            this.status = lambda()
+        operator fun invoke(
+                x: Int =1,
+                λ: () -> String) {
+            TODO("Not yet implemented")
         }
     }
 
+    val power = Power()
 
-    val power = Power("off")
+    power level 100
+
+
+    mapOf(
+            Pair(1, " value1"),
+            Pair(2, " value2")
+         )
+
+    mapOf(1 to " value1")
 
     power.status = "on"
     power.status = "off"
 
-    // invoke - without sugar
-    power.invoke("on")
-    power.invoke("off")
+    power("on")
+    power("off")
 
-    // with sugar
-    power ("on")
-    power ("off")
-
-
-    // lambda without sugar
-    power({ "on" })
-
-    // lambda
     power {
-        // i can do more stuffs here
         "on"
     }
 
 
 
-    // infix
 
-    power.level(1)
-
-    power level 1
 }

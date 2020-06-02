@@ -64,23 +64,29 @@ fun renderHtml(init: Html.() -> Unit) {
 
 fun main() {
     renderHtml {
+
+
+
         header {
             title = "title1"
         }
         body {
             div {
                 style = "style1"
-                content {
-                    "content1"
-                }
+                content { "content1" }
             }
             div {
                 style = "style2"
-                content {
-                    "content2"
-                }
+                content { "content2" }
             }
         }
+
+
+
+
+
+
+
     }
 }
 

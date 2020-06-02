@@ -17,6 +17,10 @@
 
 
 
+
+
+
+
 ### What's Kotlin? 
 
 - Jetbrains
@@ -29,22 +33,25 @@
     - Kotlin Shell Script (Zalando deploy pipelines)
     - Ktor
     - React+Kotlin/JS
-    - Arrowkt
+    - Arrowkt (cats scala)
     - Test suite (kotlin.test package, kotest - by Jetbrains, strikt, assertk, assertj*, junit*)
       - [Kotlin Testing Libraries](https://docs.google.com/presentation/d/1uShNWOJ_mMH03QXn46oha0bW5WDRUAStPOspwWlUoUQ/edit#slide=id.p)
     - Gradle DSL
     - Cucumber DSL
     
     
+
+
+
+
     
     
-    
-    
+
 ### Why Kotlin?
 
 - Secure
 - Idiomatic and concise ([less verbose](java-to-kotlin.png))
-- Richer API (list, map, constructors, sugar syntax)
+- Richer API (list, map, constructors, syntactic sugar)
 - Functional 
 - Coroutines (lightweight threads: async code in [sequential style](./coroutines.png))
 - Official supported by [Springboot 2.x.x](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-fn)
@@ -54,16 +61,32 @@
     - For Scala, Groovy 🍰
     - IntelliJ it's going to teach you more than Google
     - Does not force you go into another full paradigm, framework, tools
+    
+    
+    
+    
 
 ### Kotlin keynotes:
 
   - Secure
   - Idiomatic
-  - Sugar syntax (Write less code)
+  - Syntactic Sugar (Write less code)
 
   **Move fast and safe to production!**
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   
+   
+   
     
-    
+
 ### Getting comfortable with Kotlin
     
  - Tools
@@ -71,6 +94,9 @@
    - Convert to Kotlin -> Code -> [Convert Java File to Kotlin](./CityJava.java)
    - Tools -> Kotlin -> Kotlin Bytecode 
    - Json to data class
+   
+   
+   
    
  - Language:
    - [Basic](./01basic.kt)
@@ -80,6 +106,11 @@
    - [Operators](./05operators.kt)
    - [Extension Function](./06extfun.kt)
     
+    
+    
+   
+    
+
 ### DSL Domain-Specific Language
 
  #### What's a DSL?
@@ -100,9 +131,10 @@
      - [Html Render DSL](./examples/html/dsl/dslexample.kt)
  
   #### Let's create one
-   - [Accetance Test Project - Mock Router](./examples/mock)
+   - [Acceptance Test Project - Mock Router](./examples/mock/mockroutedsl.kt)
  
  
+
 ## Extra
    
    - List vs Sequences - lambdas [Topic13]
@@ -113,5 +145,4 @@
      - apply
      - run
      - with
-     
    

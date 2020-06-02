@@ -8,7 +8,7 @@ package br.com.kotlin.dsl.examples.mock
 mockFacade.mockRequest(
    request()
       .withMethod(GET)
-      .withPath(STOCK_PRODUCT_QUANTITIES_PATH)
+      .withPath(" /stock")
       .withQueryParam("legacy_skus", simpleSku.sku)
       .withQueryParam("legacy_appdomain_id", appDomainId.id.toString())
       .withHeader("Authorization", "Bearer .*")
@@ -23,9 +23,23 @@ mockFacade.mockRequest(
       .build()
 )
 
+mock {
+    request {
+        path = "/hello"
+        body = "{name: Mike}"
+        header.withName("x-flow-id").withValue("v1")
+        header withName "x-asdfasdf-id" withValue "v1" withValue " v2"
+    }
+    response {
+        code = 201
+        body = "typejson here"
+    }
+}
+
 
  */
 // @formatter:on
+
 
 typealias Name = String
 typealias Value = String
@@ -35,138 +49,176 @@ typealias HttpMethod = String
 typealias StatusCode = Int
 
 
-
-
-
-class Step3 {
-    // 1 - declare request and response
-
-    class Request(var method: HttpMethod, var path: Path, var body: Body)
-    class Response(var code: StatusCode, var body: Body)
-
-    // 2 - declare mock func
-    /*
-     fun mock(request: Request, response: Response) {
-     }
-    */
-
-    // 3 - declare Handler and change mock fun
-
-    class Handler(val request: Request, val response: Response)
-
-
-    fun mock(handler: (Handler) -> Unit) {
-    }
-
-    fun main() {
-        mock {
-            it.request.path = "/hello"
-            it.request.body = "{name: Mike}"
-            it.response.code = 201
-            it.response.body = "typejson here"
-        }
+class Request(var method: HttpMethod, var path: Path, var body: Content) {
+    operator fun invoke(init: Request.() -> Unit) {
+        TODO("Not yet implemented")
     }
 }
 
+class Response(var code: StatusCode, var body: Body)
 
-// remove the it
-class Step4 {
-    class Request(var method: HttpMethod, var path: Path, var body: Body)
-    class Response(var code: StatusCode, var body: Body)
-    class Handler(val request: Request, val response: Response)
-    fun mock(handler: Handler.() -> Unit) { }
+class Handler(var request: Request, var response: Response)
 
-    fun main() {
-        mock {
-            request.path = "/hello"
-            request.body = "{name: Mike}"
-            response.code = 201
-            response.body = "{message: Hello Mike}"
-        }
+
+class Content(var value: String) {
+    operator fun invoke(function: () -> String) {
+        TODO("Not yet implemented")
     }
 }
 
-// make request look like request { it.path }
-class Step5 {
-    class Request(var method: HttpMethod, var path: Path, var body: Body) {
-        operator fun invoke(function: (Request) -> Unit) {
-            TODO("Not yet implemented")
-        }
-    }
+fun mockExternalService(handler: Handler.() -> Unit) {
 
-    class Response(var code: StatusCode, var body: Body)
-    class Handler(val request: Request, val response: Response)
-    fun mock(handler: Handler.() -> Unit) { }
-
-    fun main() {
-
-        class Request(var method: HttpMethod, var path: Path, var body: Body) {
-            operator fun invoke (init: (Request) -> Unit) {
-            }
-        }
-
-        mock {
-            request {
-                it.path = "/hello"
-                it.body = "{name: Mike}"
-            }
-            response.code = 201
-            response.body = "typejson here"
-        }
-    }
 }
 
-// remove it from request
-
-// need to explain anonymous function of extension function here
-
-fun test (init: String.(String) -> String) {
-    println(init("hello", "mike"))
-    println("hello".init( "mike" ))
-}
 
 fun main() {
-    test {
-        "${this.toUpperCase()} ${it}"
+    mockExternalService {
+        request {
+            path = "/hello"
+            method = "GET"
+            body {
+                "my json"
+            }
+
+
+        }
+
+
+        response.code = 201
+        response.body = "{\n  \"hello\": \" HELLO Mike\"\n}"
     }
 }
 
-class Step6 {
-    class Request(var method: HttpMethod, var path: Path, var body: Body) {
-        operator fun invoke(init: Request.() -> Unit) {
-            this.init()
-        }
-    }
 
-    class Response(var code: StatusCode, var body: Body) {
-        operator fun invoke(function: Response.() -> Unit) {
-            TODO("Not yet implemented")
-        }
-    }
-    class Handler(val request: Request, val response: Response)
-    fun mock(handler: Handler.() -> Unit) { }
-
-    fun main() {
-        class Request(var method: HttpMethod, var path: Path, var body: Body) {
-            operator fun invoke (init: (Request) -> Unit) {
-            }
-        }
-
-        mock {
-            request {
-                path = "/hello"
-                body = "{name: Mike}"
-            }
-            response {
-                code = 201
-                body = "typejson here"
-            }
-        }
-    }
-}
-
-// remove it from request
-// header in the wrong way just one value it will override the value
+//class Step3 {
+//    // 1 - declare request and response
+//
+//    class Request(var method: HttpMethod, var path: Path, var body: Body)
+//    class Response(var code: StatusCode, var body: Body)
+//
+//    // 2 - declare mock func
+//    /*
+//     fun mock(request: Request, response: Response) {
+//     }
+//    */
+//
+//    // 3 - declare Handler and change mock fun
+//
+//    class Handler(val request: Request, val response: Response)
+//
+//
+//    fun mock(handler: (Handler) -> Unit) {
+//    }
+//
+//    fun main() {
+//        mock {
+//            it.request.path = "/hello"
+//            it.request.body = "{name: Mike}"
+//            it.response.code = 201
+//            it.response.body = "typejson here"
+//        }
+//    }
+//}
+//
+//
+//// remove the it
+//class Step4 {
+//    class Request(var method: HttpMethod, var path: Path, var body: Body)
+//    class Response(var code: StatusCode, var body: Body)
+//    class Handler(val request: Request, val response: Response)
+//    fun mock(handler: Handler.() -> Unit) { }
+//
+//    fun main() {
+//        mock {
+//            request.path = "/hello"
+//            request.body = "{name: Mike}"
+//            response.code = 201
+//            response.body = "{message: Hello Mike}"
+//        }
+//    }
+//}
+//
+//// make request look like request { it.path }
+//class Step5 {
+//    class Request(var method: HttpMethod, var path: Path, var body: Body) {
+//        operator fun invoke(function: (Request) -> Unit) {
+//            TODO("Not yet implemented")
+//        }
+//    }
+//
+//    class Response(var code: StatusCode, var body: Body)
+//    class Handler(val request: Request, val response: Response)
+//    fun mock(handler: Handler.() -> Unit) { }
+//
+//    fun main() {
+//
+//        class Request(var method: HttpMethod, var path: Path, var body: Body) {
+//            operator fun invoke (init: (Request) -> Unit) {
+//            }
+//        }
+//
+//        mock {
+//            request {
+//                it.path = "/hello"
+//                it.body = "{name: Mike}"
+//            }
+//            response.code = 201
+//            response.body = "typejson here"
+//        }
+//    }
+//}
+//
+//// remove it from request
+//
+//// need to explain anonymous function of extension function here
+//
+//fun test (init: String.(String) -> String) {
+//    println(init("hello", "mike"))
+//    println("hello".init( "mike" ))
+//}
+//
+//fun main() {
+//    test {
+//        "${this.toUpperCase()} ${it}"
+//    }
+//}
+//
+//class Step6 {
+//    class Request(var method: HttpMethod, var path: Path, var body: Body) {
+//        operator fun invoke(init: Request.() -> Unit) {
+//            this.init()
+//        }
+//    }
+//
+//    class Response(var code: StatusCode, var body: Body) {
+//        operator fun invoke(function: Response.() -> Unit) {
+//            TODO("Not yet implemented")
+//        }
+//    }
+//    class Handler(val request: Request, val response: Response)
+//    fun mock(handler: Handler.() -> Unit) { }
+//
+//    fun main() {
+//        class Request(var method: HttpMethod, var path: Path, var body: Body) {
+//            operator fun invoke (init: (Request) -> Unit) {
+//            }
+//        }
+//
+//        mock {
+//            request {
+//                path = "/hello"
+//                body = "{name: Mike}"
+//            }
+//            response {
+//                code = 201
+//                body = "typejson here"
+//            }
+//        }
+//    }
+//}
+//
+//// remove it from request
+//// header in the wrong way just one value it will override the value
 class Step7 {
     data class Header(var name: Name, var values: Set<Value>) {
         operator fun invoke(function: Header.() -> Unit) {
@@ -174,22 +226,26 @@ class Step7 {
         }
     }
 
-    class Request(var method: HttpMethod, var path: Path, var body: Body, var header: Header) {
+    class Request(var method: HttpMethod, var path: Path, var body: Body,
+                  var header: Header) {
         operator fun invoke(function: Request.() -> Unit) {
             TODO("Not yet implemented")
         }
     }
+
     class Response(var code: StatusCode, var body: Body) {
         operator fun invoke(function: Response.() -> Unit) {
             TODO("Not yet implemented")
         }
     }
+
     class Handler(val request: Request, val response: Response)
-    fun mock(handler: Handler.() -> Unit) { }
+
+    fun mock(handler: Handler.() -> Unit) {}
 
     fun main() {
         class Request(var method: HttpMethod, var path: Path, var body: Body) {
-            operator fun invoke (init: (Request) -> Unit) {
+            operator fun invoke(init: (Request) -> Unit) {
             }
         }
 
@@ -214,9 +270,10 @@ class Step7 {
     }
 }
 
-
-// header as a function
-// show other headers declarations options
+//
+//
+//// header as a function
+//// show other headers declarations options
 class Step8 {
     data class Header(var name: Name = "", var values: Set<Value> = emptySet())
 
@@ -227,27 +284,30 @@ class Step8 {
         }
 
         fun header(init: Header.() -> Unit): Header {
-            return Header().apply {
-                init()
-                headers += this
-            }
+            val header = Header()
+            header.init()
+            headers += header
+            return header
         }
 
         fun header(name: Name, init: () -> Set<Value>): Header {
             TODO()
         }
     }
+
     class Response(var code: StatusCode, var body: Body) {
         operator fun invoke(function: Response.() -> Unit) {
             TODO("Not yet implemented")
         }
     }
+
     class Handler(val request: Request, val response: Response)
-    fun mock(handler: Handler.() -> Unit) { }
+
+    fun mock(handler: Handler.() -> Unit) {}
 
     fun main() {
         class Request(var method: HttpMethod, var path: Path, var body: Body) {
-            operator fun invoke (init: (Request) -> Unit) {
+            operator fun invoke(init: (Request) -> Unit) {
             }
         }
 
@@ -255,11 +315,13 @@ class Step8 {
             request {
                 path = "/hello"
                 body = "{name: Mike}"
+
                 header {
                     name = "x-flow-id"
                     values = setOf("v1", "v2")
                 }
-                header {// wrong
+
+                header {
                     name = "other"
                     values = setOf("v1", "v2")
                 }
@@ -282,13 +344,15 @@ class Step8 {
         }
     }
 }
-
-
-// header as a function
-// final example, creating a better header
+//
+//
+//// header as a function
+//// final example, creating a better header
 class Step9 {
 
     class HeaderBuilder {
+
+
         val headers: MutableMap<String, PartialHeader> = mutableMapOf()
 
         infix fun withName(name: String): HeaderBuilder.PartialHeader {
@@ -339,16 +403,30 @@ class Step9 {
             }
         }
 
+
+        mock {
+            request {
+                header.withName("a").withValue("")
+            }
+
+        }
+
         mock {
             request {
                 path = "/hello"
                 body = "{name: Mike}"
-                header withName "x-flow-id" withValue "v1" withValue "v2"
+                header.withName("x-flow-id").withValue("v1")
+                header withName "x-asdfasdf-id" withValue "v1" withValue " v2"
             }
             response {
                 code = 201
                 body = "typejson here"
             }
         }
+
+
+
+
+
     }
 }

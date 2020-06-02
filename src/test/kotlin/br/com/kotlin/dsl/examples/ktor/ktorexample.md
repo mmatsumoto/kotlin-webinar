@@ -2,6 +2,7 @@
 ```kotlin
 
 fun main(args: Array<String>) {
+
     val server = embeddedServer(Netty, 8080) {
         routing {
             get("/") {
@@ -10,6 +11,8 @@ fun main(args: Array<String>) {
         }
     }
     server.start(wait = true)
+
+
 }
 
 routing {
