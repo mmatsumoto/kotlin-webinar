@@ -1,15 +1,7 @@
 package br.com.kotlin.dsl
 
 
-typealias Name = String
-typealias Value = String
-typealias Path = String
-typealias Body = String
-typealias HttpMethod = String
-typealias StatusCode = Int
-
-
-class Step1 {
+class ExStep1 {
 
     class Request(var method: HttpMethod, var path: Path, var body: Body)
 
@@ -38,7 +30,7 @@ class Step1 {
 }
 
 // remove it
-class Step2 {
+class ExStep2 {
 
     class Request(var method: HttpMethod, var path: Path, var body: Body)
 
@@ -80,7 +72,7 @@ class Step2 {
 
 
 // invoke as body - request { body = aaa, path = 111 }
-class Step3 {
+class ExStep3 {
     class Request(var method: HttpMethod, var path: Path, var body: Body) {
         operator fun invoke(init: (Request) -> Unit) {
         }
@@ -113,7 +105,7 @@ class Step3 {
 }
 
 // remove request.body.content = "xx" with body { "request " }
-class Step4 {
+class ExStep4 {
     class Request(var method: HttpMethod, var path: Path, var body: Body) {
         operator fun invoke(init: Request.() -> Unit) {
         }
@@ -151,7 +143,7 @@ class Step4 {
 }
 
 // adding method header(): Header { }
-class Step5 {
+class ExStep5 {
     class Request(var method: HttpMethod, var path: Path, var body: Body) {
 
         private val headers: MutableSet<Header> = mutableSetOf()
@@ -208,7 +200,7 @@ class Step5 {
 
 
 // adding method header(): Header { } remove the it
-class Step6 {
+class ExStep6 {
     class Request(var method: HttpMethod, var path: Path, var body: Body) {
 
         private val headers: MutableSet<Header> = mutableSetOf()
@@ -264,7 +256,7 @@ class Step6 {
 }
 
 // adding HeaderBuilder - infix withName
-class Step7 {
+class ExStep7 {
     class Request(var method: HttpMethod, var path: Path, var body: Body) {
 
         operator fun invoke(init: Request.() -> Unit) {}
@@ -294,7 +286,7 @@ class Step7 {
             val values = mutableSetOf<Value>()
 
             infix fun withValue(value: Value): PartialHeader {
-               return this.apply { values += value }
+                return this.apply { values += value }
             }
         }
 

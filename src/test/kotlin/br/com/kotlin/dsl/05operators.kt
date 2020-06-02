@@ -94,9 +94,7 @@ fun over() {
             TODO("Not yet implemented")
         }
 
-        operator fun invoke(
-                x: Int =1,
-                λ: () -> String) {
+        operator fun invoke(λ: () -> String) {
             TODO("Not yet implemented")
         }
     }
@@ -105,13 +103,6 @@ fun over() {
 
     power level 100
 
-
-    mapOf(
-            Pair(1, " value1"),
-            Pair(2, " value2")
-         )
-
-    mapOf(1 to " value1")
 
     power.status = "on"
     power.status = "off"

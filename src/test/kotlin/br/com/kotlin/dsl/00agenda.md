@@ -2,115 +2,6 @@
 
 # Building DSL with Kotlin
 
-## Agenda
-
- - What/Why Kotlin? - (2, 3 minutes) 
- - Getting comfortable with Kotlin (20-25 minutes)
- - DSL Domain-Specific Language (35 minutes)
-   - What's a DSL?      
-   - Why should I care?
-   - Where to start?
-   - Let's create one
-
-
-
-
-
-
-
-
-
-
-### What's Kotlin? 
-
-- Jetbrains
-- Inspired: Scala, Groovy, C#, Ruby, etc
-- Java/Jvm
-- Android ⭐️
-- Javascript
-- Native
-- Others
-    - Kotlin Shell Script (Zalando deploy pipelines)
-    - Ktor
-    - React+Kotlin/JS
-    - Arrowkt (cats scala)
-    - Test suite (kotlin.test package, kotest - by Jetbrains, strikt, assertk, assertj*, junit*)
-      - [Kotlin Testing Libraries](https://docs.google.com/presentation/d/1uShNWOJ_mMH03QXn46oha0bW5WDRUAStPOspwWlUoUQ/edit#slide=id.p)
-    - Gradle DSL
-    - Cucumber DSL
-    
-    
-
-
-
-
-    
-    
-
-### Why Kotlin?
-
-- Secure
-- Idiomatic and concise ([less verbose](java-to-kotlin.png))
-- Richer API (list, map, constructors, syntactic sugar)
-- Functional 
-- Coroutines (lightweight threads: async code in [sequential style](./coroutines.png))
-- Official supported by [Springboot 2.x.x](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-fn)
-  - [Web Flux with Kotlin](https://docs.google.com/presentation/d/1oNKXaFwea9iDo3Mis_uUZkSNmdeVaCumPlDtLxG3wp4/edit#slide=id.g70d189084b_0_17)
-- DSL support
-- Onboard 
-    - For Scala, Groovy 🍰
-    - IntelliJ it's going to teach you more than Google
-    - Does not force you go into another full paradigm, framework, tools
-    
-    
-    
-    
-
-### Kotlin keynotes:
-
-  - Secure
-  - Idiomatic
-  - Syntactic Sugar (Write less code)
-
-  **Move fast and safe to production!**
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
-   
-   
-    
-
-### Getting comfortable with Kotlin
-    
- - Tools
-   - Tools -> Kotlin -> Kotlin REPL
-   - Convert to Kotlin -> Code -> [Convert Java File to Kotlin](./CityJava.java)
-   - Tools -> Kotlin -> Kotlin Bytecode 
-   - Json to data class
-   
-   
-   
-   
- - Language:
-   - [Basic](./01basic.kt)
-   - [Nullpointer](./02nullpointer.kt)
-   - [Lambdas](./03lambdas.kt)
-   - [Default values](04defaultvalues.kt)
-   - [Operators](./05operators.kt)
-   - [Extension Function](./06extfun.kt)
-    
-    
-    
-   
-    
-
 ### DSL Domain-Specific Language
 
  #### What's a DSL?
@@ -131,18 +22,43 @@
      - [Html Render DSL](./examples/html/dsl/dslexample.kt)
  
   #### Let's create one
-   - [Acceptance Test Project - Mock Router](./examples/mock/mockroutedsl.kt)
- 
+   - [Acceptance Test Project - Mock Router](examples/dslexample/mockroutedsl.kt)
  
 
-## Extra
-   
-   - List vs Sequences - lambdas [Topic13]
-   - Inline - lambdas [Topic12]
-   - Tacit programming, no point-free style [Topic16]
-     - also 
-     - let
-     - apply
-     - run
-     - with
-   
+
+```Java
+        mockFacade.mock(
+           request()
+              .withMethod(GET)
+              .withPath(" /hello")
+              .withQueryParam("legacy_skus", simpleSku.sku)
+              .withQueryParam("legacy_appdomain_id", appDomainId.id.toString())
+              .withHeader("Authorization", "Bearer .*")
+              .withHeader("X-Flow-Id", "foobar1")
+              .withHeader("X-zalando-client-id", "client1")
+              .withBody("{'name':'Mike'}")
+              .build(),
+           response()
+              .withStatusCode(201)
+              .withHeader("Content-Type", "application/json")
+              .withBody("{'message': 'Hello Mike'}".toJson())
+              .withDelay(200ms)
+              .build()
+        )
+```
+
+```kotlin
+     mock {
+        request {
+            path = "/hello"
+            body = "{'name':'Mike'}"
+            header.withName("x-flow-id").withValue("v1")
+            header withName "x-asdfasdf-id" withValue "v1" withValue " v2"
+        }
+        response {
+            code = 201
+            body = "{'message': 'Hello Mike'}"
+            delay = 100ms
+        }
+    }
+```
